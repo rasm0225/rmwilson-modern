@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>R.M. Wilson Consulting Inc.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #0d1b2a;
+      --navy-mid:  #1a2e44;
+      --navy-light:#243c55;
+      --gold:      #c8a84b;
+      --gold-light:#e8c96a;
+      --white:     #ffffff;
+      --off-white: #f5f7fa;
+      --text:      #1e293b;
+      --muted:     #64748b;
+      --border:    #e2e8f0;
+      --radius:    10px;
+      --shadow:    0 4px 24px rgba(13,27,42,.10);
+      --shadow-lg: 0 12px 40px rgba(13,27,42,.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; }
+    a   { color: var(--gold); text-decoration: none; transition: color .2s; }
+    a:hover { color: var(--gold-light); }
+
+    /* ── Nav ──────────────────────────────────────────────── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: transparent;
+      transition: background .35s, box-shadow .35s;
+    }
+    #navbar.scrolled {
+      background: var(--navy);
+      box-shadow: 0 2px 16px rgba(0,0,0,.35);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: .01em;
+      line-height: 1.3;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,.85);
+      font-size: .9rem;
+      font-weight: 500;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+
+    /* hamburger */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* mobile menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 72px; left: 0; right: 0;
+      background: var(--navy);
+      padding: 1.5rem 2rem;
+      flex-direction: column;
+      gap: 1rem;
+      z-index: 999;
+      box-shadow: 0 8px 24px rgba(0,0,0,.3);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: rgba(255,255,255,.9);
+      font-size: 1rem;
+      font-weight: 500;
+      padding: .5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    /* ── Hero ─────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      background:
+        linear-gradient(160deg, rgba(13,27,42,.88) 0%, rgba(26,46,68,.80) 100%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='900'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230d1b2a'/%3E%3Cstop offset='1' stop-color='%23243c55'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1440' height='900' fill='url(%23g)'/%3E%3Ccircle cx='200' cy='150' r='300' fill='%23c8a84b' fill-opacity='.06'/%3E%3Ccircle cx='1200' cy='700' r='400' fill='%231a6b9a' fill-opacity='.1'/%3E%3C/svg%3E") center/cover;
+      display: flex;
+      align-items: center;
+      padding: 7rem 2rem 5rem;
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      color: var(--gold);
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      border-left: 3px solid var(--gold);
+      padding-left: .75rem;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      max-width: 700px;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title em {
+      font-style: normal;
+      color: var(--gold);
+    }
+    .hero-sub {
+      font-size: 1.125rem;
+      color: rgba(255,255,255,.75);
+      max-width: 580px;
+      margin-bottom: 2.5rem;
+      line-height: 1.75;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .85rem 2rem;
+      border-radius: 6px;
+      font-size: .95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s, background .2s;
+      border: none;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      box-shadow: 0 4px 20px rgba(200,168,75,.35);
+    }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      box-shadow: 0 6px 28px rgba(200,168,75,.45);
+      color: var(--navy);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,.4);
+    }
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* hero stats strip */
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 4rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(255,255,255,.12);
+      flex-wrap: wrap;
+    }
+    .stat-item {}
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: .82rem;
+      color: rgba(255,255,255,.6);
+      margin-top: .3rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    /* ── Section Scaffolding ──────────────────────────────── */
+    section { padding: 5rem 2rem; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-tag {
+      display: inline-block;
+      color: var(--gold);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-bottom: .75rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.25;
+      margin-bottom: 1rem;
+    }
+    .section-title.light { color: var(--white); }
+    .section-lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 640px;
+      margin-bottom: 3rem;
+    }
+    .section-lead.light { color: rgba(255,255,255,.7); }
+    .divider {
+      width: 48px; height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Services ─────────────────────────────────────────── */
+    #services { background: var(--off-white); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      border-top: 3px solid transparent;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+    }
+    .service-card:hover {
+      border-top-color: var(--gold);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .service-icon {
+      width: 48px; height: 48px;
+      background: rgba(200,168,75,.12);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      font-size: 1.4rem;
+    }
+    .service-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: .5rem;
+    }
+    .service-desc {
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── About ────────────────────────────────────────────── */
+    #about { background: var(--navy); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .about-text p {
+      color: rgba(255,255,255,.78);
+      font-size: 1.02rem;
+      line-height: 1.8;
+      margin-bottom: 1.25rem;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-highlights {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .highlight-item {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.09);
+      border-left: 3px solid var(--gold);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+    }
+    .highlight-item h4 {
+      color: var(--gold);
+      font-size: .85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: .35rem;
+    }
+    .highlight-item p {
+      color: rgba(255,255,255,.72);
+      font-size: .9rem;
+      line-height: 1.6;
+    }
+
+    /* ── Resources ────────────────────────────────────────── */
+    #resources { background: var(--white); }
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .resource-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      transition: border-color .25s, box-shadow .25s, transform .25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .resource-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s;
+    }
+    .resource-card:hover::before { transform: scaleX(1); }
+    .resource-card:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow);
+      transform: translateY(-3px);
+    }
+    .resource-badge {
+      display: inline-block;
+      padding: .2rem .7rem;
+      background: rgba(200,168,75,.12);
+      color: var(--gold);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border-radius: 100px;
+      margin-bottom: .85rem;
+    }
+    .resource-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: .6rem;
+      line-height: 1.4;
+    }
+    .resource-card p {
+      font-size: .88rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .resource-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      font-size: .84rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .resource-link svg { transition: transform .2s; }
+    .resource-link:hover svg { transform: translateX(3px); }
+
+    /* ── Contact ──────────────────────────────────────────── */
+    #contact { background: var(--off-white); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .contact-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+    .contact-card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .contact-avatar {
+      width: 52px; height: 52px;
+      background: var(--navy);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .contact-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+    .contact-role {
+      font-size: .82rem;
+      color: var(--gold);
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      margin-top: .2rem;
+    }
+    .contact-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: .85rem;
+      margin-bottom: 1rem;
+      font-size: .92rem;
+      color: var(--text);
+    }
+    .contact-detail:last-child { margin-bottom: 0; }
+    .detail-icon {
+      width: 32px; height: 32px;
+      background: rgba(200,168,75,.1);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--gold);
+      font-size: .9rem;
+      margin-top: .05rem;
+    }
+    .detail-label {
+      font-size: .73rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .detail-value {
+      font-size: .93rem;
+      color: var(--text);
+      line-height: 1.4;
+      margin-top: .1rem;
+    }
+    .detail-value a { color: var(--text); }
+    .detail-value a:hover { color: var(--gold); }
+
+    /* ── Footer ───────────────────────────────────────────── */
+    footer {
+      background: var(--navy);
+      padding: 3rem 2rem;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-tagline {
+      font-size: .88rem;
+      color: var(--gold);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .footer-copy {
+      font-size: .8rem;
+      color: rgba(255,255,255,.35);
+      margin-top: .5rem;
+    }
+    .footer-divider {
+      width: 40px; height: 2px;
+      background: rgba(200,168,75,.35);
+      border-radius: 2px;
+    }
+
+    /* ── Scroll reveal ────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── Responsive ───────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      section { padding: 4rem 1.25rem; }
+      .hero-stats { gap: 2rem; }
+      .services-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .hero-ctas { flex-direction: column; }
+      .btn { justify-content: center; }
+      .hero-stats { flex-direction: column; gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ─────────────────────────────── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">R.M. Wilson <span>Consulting</span> Inc.</div>
+      <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#resources">Resources</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- mobile menu -->
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="#hero"      onclick="closeMobile()">Home</a>
+    <a href="#services"  onclick="closeMobile()">Services</a>
+    <a href="#about"     onclick="closeMobile()">About</a>
+    <a href="#resources" onclick="closeMobile()">Resources</a>
+    <a href="#contact"   onclick="closeMobile()">Contact</a>
+  </nav>
+
+  <!-- ── Hero ───────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-inner">
+      <span class="hero-eyebrow">Workforce Information Solutions</span>
+      <h1 class="hero-title">
+        Build The Future.<br>
+        <em>Make A Difference.</em>
+      </h1>
+      <p class="hero-sub">
+        R.M. Wilson Consulting Inc. delivers specialty software and services that power the U.S. labor exchange — from automated coding solutions to next-generation job search platforms.
+      </p>
+      <div class="hero-ctas">
+        <a href="#services" class="btn btn-primary">
+          Explore Our Services
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">75+</div>
+          <div class="stat-label">Years Combined Experience</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">8</div>
+          <div class="stat-label">National Awards</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">O*NET</div>
+          <div class="stat-label">AutoCoder Specialists</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">Fed &amp; State</div>
+          <div class="stat-label">Workforce Systems</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Services ───────────────────────────────── -->
+  <section id="services">
+    <div class="section-inner">
+      <span class="section-tag">What We Do</span>
+      <div class="divider"></div>
+      <h2 class="section-title">Our Focus Areas</h2>
+      <p class="section-lead">
+        We focus on activities that contribute to the successful functioning of the U.S. labor exchange — serving federal, state, local, and private workforce systems.
+      </p>
+
+      <div class="services-grid">
+
+        <div class="service-card reveal">
+          <div class="service-icon">🤖</div>
+          <div class="service-title">Automated Coding Solutions</div>
+          <p class="service-desc">Advanced auto-coding applications including the O*NET-SOC AutoCoder to assign occupation codes to job orders, resumes, applicants, and LMI data with speed and accuracy.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon">🔍</div>
+          <div class="service-title">Next-Generation Job Search</div>
+          <p class="service-desc">State-of-the-art job search technology including Enigma AJS — purpose-built for the modern workforce and designed to connect workers with opportunities at scale.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon">📊</div>
+          <div class="service-title">Real-Time Labor Market Information</div>
+          <p class="service-desc">Live, actionable labor market data and analytics that help public and private workforce systems make informed decisions about employment trends and workforce needs.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon">🗂️</div>
+          <div class="service-title">Taxonomy Development &amp; Linkages</div>
+          <p class="service-desc">Expert development, refinement, and linkage of occupational taxonomies — ensuring your systems speak a common language across all workforce information platforms.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon">🔬</div>
+          <div class="service-title">Pure &amp; Applied Research</div>
+          <p class="service-desc">Rigorous research initiatives that advance the science of workforce systems — from foundational studies to practical applied research solving today's employment challenges.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="service-icon">🖥️</div>
+          <div class="service-title">Workforce Information Systems</div>
+          <p class="service-desc">End-to-end development of visionary workforce information systems, plus design and usability testing of application interfaces that are intuitive for every user.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── About ──────────────────────────────────── -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <span class="section-tag">Who We Are</span>
+          <div class="divider"></div>
+          <h2 class="section-title light">Our Qualifications</h2>
+          <p>
+            Corporate board members and staff bring three-quarters of a century of experience in private- and public-sector business — with the corporate president maintaining a sustained record of innovation in the workforce system.
+          </p>
+          <p>
+            Previous work has included the development of visionary workforce information systems, skill match applications, and customer-focused Internet services that have received <strong style="color:var(--gold)">eight national awards</strong> for innovation and customer service over the past ten years.
+          </p>
+          <p>
+            At R.M. Wilson Consulting Inc., our focus is on building a brighter future. Get in touch with us today.
+          </p>
+          <div style="margin-top:2rem;">
+            <a href="#contact" class="btn btn-primary">Get In Touch</a>
+          </div>
+        </div>
+
+        <div class="about-highlights reveal">
+          <div class="highlight-item">
+            <h4>ALMIS One-Stop Technical Standards</h4>
+            <p>Served on the national consortium establishing standards for America's workforce one-stop delivery system.</p>
+          </div>
+          <div class="highlight-item">
+            <h4>America's Career InfoNet — Past Chair</h4>
+            <p>Led the national initiative providing career and labor market information to the American workforce.</p>
+          </div>
+          <div class="highlight-item">
+            <h4>America's Learning Exchange</h4>
+            <p>Contributed to the national platform connecting learners with education and training opportunities.</p>
+          </div>
+          <div class="highlight-item">
+            <h4>ALMIS Database &amp; LMI Access</h4>
+            <p>Deep involvement in the foundational labor market information systems that power workforce decisions nationwide.</p>
+          </div>
+          <div class="highlight-item">
+            <h4>PELEX Liaisons</h4>
+            <p>Active liaison role connecting workforce systems and ensuring interoperability across national platforms.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Resources ──────────────────────────────── -->
+  <section id="resources">
+    <div class="section-inner">
+      <span class="section-tag">Resources</span>
+      <div class="divider"></div>
+      <h2 class="section-title">Tools &amp; Publications</h2>
+      <p class="section-lead">
+        Explore applications, blogs, and research documents from R.M. Wilson Consulting Inc.
+      </p>
+
+      <div class="resources-grid">
+
+        <div class="resource-card reveal">
+          <span class="resource-badge">Application</span>
+          <h3>O*NET-SOC AutoCoder Application</h3>
+          <p>Advanced auto-coding application developed by R.M. Wilson Consulting to assign O*NET-SOC occupation codes to job orders, resumes, applicants, and LMI data.</p>
+          <a href="http://www.rmwilsonconsulting.com/resources.html" class="resource-link" target="_blank" rel="noopener">
+            Learn more
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+
+        <div class="resource-card reveal">
+          <span class="resource-badge">Blog</span>
+          <h3>O*NET-SOC AutoCoder Blog</h3>
+          <p>Blog by Bob Wilson, President of R.M. Wilson Consulting Inc., covering all things AutoCoder — updates, tips, and industry insights.</p>
+          <a href="http://www.rmwilsonconsulting.com/resources.html" class="resource-link" target="_blank" rel="noopener">
+            Read the blog
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+
+        <div class="resource-card reveal">
+          <span class="resource-badge">Blog</span>
+          <h3>Job Search Engine Guide Blog</h3>
+          <p>Blog by Bob Wilson, President of R.M. Wilson Consulting Inc., on the state of the art in job search technology and the future of workforce systems.</p>
+          <a href="http://www.rmwilsonconsulting.com/resources.html" class="resource-link" target="_blank" rel="noopener">
+            Read the blog
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+
+        <div class="resource-card reveal">
+          <span class="resource-badge">Presentation</span>
+          <h3>Ten Reasons to Select RMWC O*NET-SOC AutoCoder v7</h3>
+          <p>A concise presentation outlining the top ten reasons to choose the RMWC O*NET-SOC AutoCoder v7 for your workforce system's coding needs.</p>
+          <a href="http://www.rmwilsonconsulting.com/resources.html" class="resource-link" target="_blank" rel="noopener">
+            View presentation
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact ────────────────────────────────── -->
+  <section id="contact">
+    <div class="section-inner">
+      <span class="section-tag">Get In Touch</span>
+      <div class="divider"></div>
+      <h2 class="section-title">Our Locations</h2>
+      <p class="section-lead">
+        Reach out to our team directly. We serve federal, state, and private workforce system clients nationwide.
+      </p>
+
+      <div class="contact-grid">
+
+        <!-- Bob Wilson -->
+        <div class="contact-card reveal">
+          <div class="contact-card-header">
+            <div class="contact-avatar">BW</div>
+            <div>
+              <div class="contact-name">Bob Wilson</div>
+              <div class="contact-role">President</div>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="detail-icon">📍</div>
+            <div>
+              <div class="detail-label">Address</div>
+              <div class="detail-value">107 Rainbow Dr. #770<br>Livingston, TX 77399-1007</div>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="detail-icon">📞</div>
+            <div>
+              <div class="detail-label">Phone</div>
+              <div class="detail-value"><a href="tel:7032823571">703-282-3571</a></div>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="detail-icon">🖷</div>
+            <div>
+              <div class="detail-label">Fax</div>
+              <div class="detail-value">866-850-4893</div>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="detail-icon">✉️</div>
+            <div>
+              <div class="detail-label">Email</div>
+              <div class="detail-value"><a href="mailto:bob@rmwilsonconsulting.com">bob@rmwilsonconsulting.com</a></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bob Wilson Sr. -->
+        <div class="contact-card reveal">
+          <div class="contact-card-header">
+            <div class="contact-avatar">BS</div>
+            <div>
+              <div class="contact-name">Bob Wilson Sr.</div>
+              <div class="contact-role">Operations Manager</div>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="detail-icon">📍</div>
+            <div>
+              <div class="detail-label">Address</div>
+              <div class="detail-value">P.O. Box 2103<br>Sisters, Oregon 97759</div>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="detail-icon">✉️</div>
+            <div>
+              <div class="detail-label">Email</div>
+              <div class="detail-value"><a href="mailto:rawilson@rmwilsonconsulting.com">rawilson@rmwilsonconsulting.com</a></div>
+            </div>
+          </div>
+
+          <div style="margin-top:1.5rem; padding:1.25rem; background:rgba(200,168,75,.07); border-radius:8px; border:1px solid rgba(200,168,75,.2);">
+            <p style="font-size:.88rem; color:var(--muted); line-height:1.6;">
+              <strong style="color:var(--navy);">Ready to work together?</strong><br>
+              Whether you need automated coding solutions, workforce system development, or labor market research, our team is ready to help you build a brighter future.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">R.M. Wilson <span>Consulting</span> Inc.</div>
+      <div class="footer-divider"></div>
+      <div class="footer-tagline">Build The Future · Make A Difference</div>
+      <div class="footer-copy">&copy; R.M. Wilson Consulting Inc. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- ── Scripts ────────────────────────────────── -->
+  <script>
+    // Sticky nav
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Mobile menu toggle
+    const navToggle = document.getElementById('navToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    function closeMobile() {
+      navToggle.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    }
+
+    // Scroll-reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          // stagger siblings
+          const siblings = e.target.parentElement.querySelectorAll('.reveal');
+          let delay = 0;
+          siblings.forEach((s, idx) => {
+            if (s === e.target) delay = idx * 80;
+          });
+          setTimeout(() => e.target.classList.add('visible'), delay);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Active nav link highlighting on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navAs = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
+      });
+      navAs.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current
+          ? 'var(--gold-light)'
+          : '';
+      });
+    });
+  </script>
+</body>
+</html>

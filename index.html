@@ -17,17 +17,18 @@
       --navy-light:#243c55;
       --gold:      #c8a84b;
       --gold-light:#e8c96a;
+      --gold-text: #6b4f10;  /* darker amber for gold text on light backgrounds */
       --white:     #ffffff;
       --off-white: #f5f7fa;
       --text:      #1e293b;
-      --muted:     #64748b;
+      --muted:     #4e5e6e;  /* darkened from #64748b for WCAG AA on light backgrounds */
       --border:    #e2e8f0;
       --radius:    10px;
       --shadow:    0 4px 24px rgba(13,27,42,.10);
       --shadow-lg: 0 12px 40px rgba(13,27,42,.18);
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; color-scheme: light; }
 
     body {
       font-family: 'Inter', system-ui, sans-serif;
@@ -242,13 +243,15 @@
     .section-inner { max-width: 1200px; margin: 0 auto; }
     .section-tag {
       display: inline-block;
-      color: var(--gold);
+      color: var(--gold-text);  /* dark amber — passes on white/off-white */
       font-size: .78rem;
       font-weight: 600;
       letter-spacing: .16em;
       text-transform: uppercase;
       margin-bottom: .75rem;
     }
+    /* On dark navy sections, restore the original gold */
+    #about .section-tag { color: var(--gold); }
     .section-title {
       font-family: 'Playfair Display', serif;
       font-size: clamp(1.75rem, 3vw, 2.5rem);
@@ -389,8 +392,8 @@
     .resource-badge {
       display: inline-block;
       padding: .2rem .7rem;
-      background: rgba(200,168,75,.12);
-      color: var(--gold);
+      background: rgba(107,79,16,.10);
+      color: var(--gold-text);
       font-size: .72rem;
       font-weight: 700;
       letter-spacing: .08em;
@@ -417,8 +420,9 @@
       gap: .35rem;
       font-size: .84rem;
       font-weight: 600;
-      color: var(--gold);
+      color: var(--gold-text);
     }
+    .resource-link:hover { color: var(--gold-text); }
     .resource-link svg { transition: transform .2s; }
     .resource-link:hover svg { transform: translateX(3px); }
 
@@ -537,7 +541,7 @@
     }
     .footer-copy {
       font-size: .8rem;
-      color: rgba(255,255,255,.35);
+      color: rgba(255,255,255,.60);
       margin-top: .5rem;
     }
     .footer-divider {
